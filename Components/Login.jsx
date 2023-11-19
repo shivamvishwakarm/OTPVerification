@@ -7,35 +7,56 @@ const LoginForm = () => {
     const [userOtp, setUserOtp] = useState('');
     const [otp, setOtp] = useState('');
   
+    // Function to generate OTP
     const generateOTP = () => {
-      const number = Math.floor(Math.random() * 1000000) + 1;
-      console.log("This is the random number " + number);
+
+      const number = Math.floor(Math.random() * 1000000) + 1;  // 6 digit random number
       setOtp(number);
+
     };
   
+    // API call to send OTP
+    // Endpoint - /api/otp
     const api = async () => {
+      
+      //post request using axios to send OTP to the user registered mobile number.
       try {
         const response = await axios.post('/api/otp', {
-          phoneNumber: phoneNumber,
+          phoneNumber: phoneNumber, 
           otp: otp,
         });
-  
+        
+        // if OTP is sent successfully, give a alert message to the user.
         alert("OTP sent successfully");
   
-      } catch (error) {
-        console.error('Error during POST request:', error);
+      } catch (error) {  // catch error if any error occurs during the API call.
+        // console.error('Error during POST request:', error);
         alert("Error during OTP verification");
       }
     };
   
+    // Function to handle Send OTP button
     const handleLogin = () => {
-      console.log(`User logged in with phone number: ${phoneNumber}`);
+      // call generateOTP function to generate OTP
       generateOTP();
     };
+
+    // Function to handle mobile number entered by the user
+    const handleUserPhoneNumber = (e) => {
+      // call generateOTP function to generate OTP
+      setPhoneNumber(e.target.value);
+    }
+
+    // Function to handle OTP entered by the user
+    const handleUserOtp = (e) => {
+      // call generateOTP function to generate OTP
+      setUserOtp(e.target.value);
+    }
   
+    // Function to verify OTP
     const verifyOtp = () => {
-     
-    //   Add your OTP verification logic here
+
+      // if OTP entered by the user is same as the OTP generated, give a alert message to the user.
       if (otp == userOtp) {
         alert("OTP Verified");
       } else {
@@ -51,37 +72,55 @@ const LoginForm = () => {
     }, [otp]);
 
   return (
-    <div style={Styles.container} >
+  <div style={Styles.container} >
 
     <div>
+
       <h2 style={Styles.h1}>Login with Mobile Number</h2>
       <input
         style={Styles.input}
         type="tel"
         placeholder="Enter your mobile number"
         value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
+        onChange={(e) => handleUserPhoneNumber(e)}  // call handleUserPhoneNumber function to handle mobile number entered by the user
       />
-      <button style={Styles.button} onClick={handleLogin}>Send OTP</button>
+
+      {/* button to send OTP */}
+      <button
+      style={Styles.button}
+      onClick={handleLogin}>
+      Send OTP
+      </button>
+
     </div>
+
     <div>
-        <h2 style={Styles.h1}>Verify OTP</h2>
+
+      <h2 style={Styles.h1}>Verify OTP</h2>
       <input
         style={Styles.input}
         type="tel"
         placeholder="Enter your otp"
         value={userOtp}
-        onChange={(e) => setUserOtp(e.target.value)}
+        onChange={(e) => handleUserOtp(e)}  // call handleUserOtp function to handle OTP entered by the user
       />
-      <button style={Styles.button} onClick={verifyOtp}>Verify</button>
+
+      {/* button to verify OTP */}
+      <button 
+      style={Styles.button}
+      onClick={verifyOtp}>
+      Verify
+      </button>
+
     </div>
-    </div>
+    
+  </div>
 
     
   );
 };
 
-
+// There are the css styles used in the above component.
 const Styles = {
   container: {
     display: 'flex',

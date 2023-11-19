@@ -22,7 +22,7 @@ A step by step series of examples that tell you how to get a development environ
 1. Clone the repository
 2. Install the dependencies using `npm install`
 3. Set up your Twilio account and get your Account SID and Auth Token
-4. Create a `.env` file in the root directory and add your Twilio Account SID and Auth Token - variable names are `TWILIO_ACCOUNT_SID` and `TWILIO_AUTH_TOKEN` respectively
+4. Create a `.env` file in the root directory and add your Twilio Account SID and Auth Token - variable names are `TWILIO_ACCOUNT_SID`, `TWILIO_NUMBER` and `TWILIO_AUTH_TOKEN` respectively
 
 
 ### Running the tests
